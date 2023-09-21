@@ -13,7 +13,7 @@
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
     </a>
   </div>
-  <h1>Vite + Svelte</h1>
+  <h1>Battle Networking</h1>
 
   <div class="card">
     <Counter />
@@ -29,6 +29,10 @@
 </main>
 
 <style>
+  :global(body) {
+    background-color: #18181A;
+    color: #E16F71;
+  }
   .logo {
     height: 6em;
     padding: 1.5em;
