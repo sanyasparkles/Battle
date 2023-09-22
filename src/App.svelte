@@ -1,5 +1,5 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
+  import Audio from './lib/Audio.svelte';
 
 </script>
 
@@ -7,7 +7,7 @@
   <h1>Battle Networking</h1>
  
   
-
+  <Audio />
  
 
   <p class="read-the-docs">
