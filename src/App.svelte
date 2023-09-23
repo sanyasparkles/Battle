@@ -1,5 +1,5 @@
 <script>
-  import Audio from './lib/Audio.svelte';
+  import Audio from './audio/Audio.svelte';
 
 </script>
 
@@ -26,3 +26,6 @@
     color: #888;
   }
 </style>
+
+
+

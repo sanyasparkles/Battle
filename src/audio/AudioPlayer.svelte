@@ -19,8 +19,7 @@
 
 <div class="player" class:paused>
 	<audio
-		{src} 
-        type="audio/ogg" 
+		{src}
 		bind:currentTime={time}
 		bind:duration
 		bind:paused
@@ -105,11 +104,11 @@
 	}
 	
 	[aria-label="pause"] {
-		background-image: url(./pause.svg);
+		background-image: url(/pause.svg);
 	}
 
 	[aria-label="play"] {
-		background-image: url(./play.svg);
+		background-image: url(/play.svg);
 	}
 
 	.info {

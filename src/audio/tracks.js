@@ -1,9 +1,9 @@
 export const tracks = [
 	{
-		// src: 'https://github.com/sanyasparkles/Battle/blob/main/music/01.opus?raw=true',
-        src: '/music/01.opus',
-		title: 'Lavender Haze',
-		artist: 'Taylor Swift'
+		// https://musopen.org/music/9862-the-blue-danube-op-314/
+		src: 'https://learn.svelte.dev/assets/media/music/strauss.mp3',
+		title: 'The Blue Danube Waltz',
+		artist: 'Johann Strauss'
 	},
 
 	{
