@@ -7,6 +7,7 @@
 	{#each tracks as track}
 		<AudioPlayer {...track} />
 	{/each}
+	<embed src="pause.svg" />
 </div>
 
 <style>

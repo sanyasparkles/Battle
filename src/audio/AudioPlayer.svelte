@@ -104,11 +104,11 @@
 	}
 	
 	[aria-label="pause"] {
-		background-image: url(/pause.svg);
-	}
+		background-image: url(src/audio/pause.svg);
+	} 
 
 	[aria-label="play"] {
-		background-image: url(/play.svg);
+		background-image: url(src/audio/play.svg);
 	}
 
 	.info {
@@ -135,14 +135,15 @@
 	.slider {
 		flex: 1;
 		height: 0.5em;
-		background: var(--bg-2);
+		background: #754d4d;
 		border-radius: 0.5em;
 		overflow: hidden;
+
 	}
 
 	.progress {
 		width: calc(100 * var(--progress));
 		height: 100%;
-		background: var(--bg-3);
+		background: #ffd8d8;
 	}
 </style>

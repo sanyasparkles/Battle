@@ -1,7 +1,7 @@
 export const tracks = [
 	{
 		// https://musopen.org/music/9862-the-blue-danube-op-314/
-		src: 'https://learn.svelte.dev/assets/media/music/strauss.mp3',
+		src: 'music/1.opus',
 		title: 'The Blue Danube Waltz',
 		artist: 'Johann Strauss'
 	},
