@@ -1,3 +1,9 @@
+- random song
+    - random gen 10 seconds of song
 
 
 get text boxes
+- if wrong --> x label
+ - count same
+- if right --> check mark label for 0.5 secs --> count++
+   - new audio
