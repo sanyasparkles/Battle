@@ -1,7 +1,6 @@
 <script>
 	export let src;
 	export let title;
-	export let artist;
 
 	let time = 0;
 	let duration = 0;
@@ -37,8 +36,7 @@
 
 	<div class="info">
 		<div class="description">
-			<strong>{title}</strong> /
-			<span>{artist}</span>
+			<strong>{title}</strong>
 		</div>
 
 		<div class="time">
