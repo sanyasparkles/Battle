@@ -1,31 +1,40 @@
 <script>
+    import { tracks } from "./tracks";
+
 	export let track
 	const src = track.src;
 	const title = track.title;
 	const songLength = track.songLength;
 
-	let time = Math.floor(Math.random() * (songLength-20));
+	let startTime = Math.floor(Math.random() * (songLength-20));
+
+	let time = 0
 	let paused = true;
+
+	let audio;
 	console.log(title)
-	console.log(time)
-	let guessedTitle = '';
+	let guessedTitle = "";
+
+	function handleAudioLoaded() {
+    if (audio) {
+      audio.currentTime = startTime;
+      audio.play(); 
+    }
+
+	setTimeout(() => {
+        audio.pause();
+      }, 15 * 1000); 
+    }
+  
 
 </script>
 
 <div class="player" class:paused>
-	<audio
-		{src}
-		bind:currentTime={time}
-		bind:paused
-		preload="metadata"
-	/>
-	
-	<button
-		class="play"
-		aria-label={paused ? 'play' : 'pause'}
-		on:click={() => paused = !paused}
-	/>
 
+	<audio id="audio" bind:paused bind:currentTime={time} bind:this={audio} preload="metadata" on:loadedmetadata={handleAudioLoaded}>
+		<source {src} />
+		Your browser does not support the audio element.
+	</audio>
 	
 	<div class="time">
 			<div
@@ -34,24 +43,30 @@
 					const div = e.currentTarget;
 				}}
 			>
-				<div class="progress" style="--progress: {time / 15}%" />
+				<div class="progress" style="--progress: {(time-startTime)/ 15}%" />
 			</div>
 		</div> 
 	</div> 
 
 
+	
 	<div class = "input">
-		<input type="text" bind:value={guessedTitle} placeholder="Type the Name">
 		<script>
-			const textInput = document.getElementById('textInput');
-			guessedTitle.addEventListener('keydown', (event) => {
-			  if (event.key === 'Enter') {
-				pased = !paused
-				console.log('Enter key pressed!');
-				// Perform desired actions here
-			  }
-			});
-		  </script>
+			let inputValue = '';
+
+			function handleKeyDown(event) {
+  				if (event.key === 'Enter') {
+				alert(`Entered value: ${inputValue}`);
+				const audio = document.getElementById('audio');
+        		if (audio) {
+          			audio.stop(); 
+        		}
+  			}
+}
+
+		</script>
+		<input type="text" bind:value={inputValue} on:keydown={handleKeyDown} placeholder="Song Name"/>
+		
 	</div>
 
 	
@@ -94,19 +109,14 @@
 		background-position: 50% 50%;
 		border-radius: 50%;
 	}
-	
-	[aria-label="pause"] {
-		background-image: url(./pause.svg);
-	} 
-
-	[aria-label="play"] {
-		background-image: url(./play.svg);
-	}
 
 	.time {
+		width: 30em;
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
+		display: flex;
+
 	}
 
 	.slider {

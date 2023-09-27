@@ -5,7 +5,6 @@
   		const randomIndex = Math.floor(Math.random() * tracks.length);
   		return tracks[randomIndex];
 	}
-	const randomTrack = getRandomTrack();
 </script>
 
 <div class = "centered">
