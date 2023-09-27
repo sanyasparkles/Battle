@@ -1,13 +1,17 @@
 <script>
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { tracks } from './tracks.js';
+	function getRandomTrack() {
+  		const randomIndex = Math.floor(Math.random() * tracks.length);
+  		return tracks[randomIndex];
+	}
+	const randomTrack = getRandomTrack();
 </script>
 
-<div class="centered">
-	{#each tracks as track}
-		<AudioPlayer {...track} />
-	{/each}
+<div class = "centered">
+	<AudioPlayer track = {getRandomTrack()} />
 </div>
+
 
 <style>
 	.centered {

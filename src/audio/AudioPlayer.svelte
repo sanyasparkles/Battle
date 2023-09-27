@@ -1,31 +1,23 @@
 <script>
-	export let src;
-	export let title;
+	export let track
+	const src = track.src;
+	const title = track.title;
+	const songLength = track.songLength;
 
-	let time = 0;
-	let duration = 0;
+	let time = Math.floor(Math.random() * (songLength-20));
 	let paused = true;
+	console.log(title)
+	console.log(time)
+	let guessedTitle = '';
 
-	function format(time) {
-		if (isNaN(time)) return '...';
-
-		const minutes = Math.floor(time / 60);
-		const seconds = Math.floor(time % 60);
-
-		return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-	}
 </script>
 
 <div class="player" class:paused>
 	<audio
 		{src}
 		bind:currentTime={time}
-		bind:duration
 		bind:paused
 		preload="metadata"
-		on:ended={() => {
-			time = 0;
-		}}
 	/>
 	
 	<button
@@ -34,47 +26,49 @@
 		on:click={() => paused = !paused}
 	/>
 
-	<div class="info">
-		<div class="description">
-			<strong>{title}</strong>
-		</div>
-
-		<div class="time">
-			<span>{format(time)}</span>
+	
+	<div class="time">
 			<div
 				class="slider"
 				on:pointerdown={e => {
 					const div = e.currentTarget;
-					
-					function seek(e) {
-						const { left, width } = div.getBoundingClientRect();
-
-						let p = (e.clientX - left) / width;
-						if (p < 0) p = 0;
-						if (p > 1) p = 1;
-						
-						time = p * duration;
-					}
-
-					seek(e);
-
-					window.addEventListener('pointermove', seek);
-
-					window.addEventListener('pointerup', () => {
-						window.removeEventListener('pointermove', seek);
-					}, {
-						once: true
-					});
 				}}
 			>
-				<div class="progress" style="--progress: {time / duration}%" />
+				<div class="progress" style="--progress: {time / 15}%" />
 			</div>
-			<span>{duration ? format(duration) : '--:--'}</span>
-		</div>
+		</div> 
+	</div> 
+
+
+	<div class = "input">
+		<input type="text" bind:value={guessedTitle} placeholder="Type the Name">
+		<script>
+			const textInput = document.getElementById('textInput');
+			guessedTitle.addEventListener('keydown', (event) => {
+			  if (event.key === 'Enter') {
+				pased = !paused
+				console.log('Enter key pressed!');
+				// Perform desired actions here
+			  }
+			});
+		  </script>
 	</div>
-</div>
+
+	
+
 
 <style>
+
+	.input {	
+		background-color: #04AA6D;
+  		border: none;
+  		/* color: white; */
+  		padding: 16px 32px;
+  		text-decoration: none;
+ 		 margin: 4px 2px;
+  		cursor: pointer;
+	}
+	
 	.player {
 		display: grid;
 		grid-template-columns: 2.5em 1fr;
@@ -109,25 +103,10 @@
 		background-image: url(./play.svg);
 	}
 
-	.info {
-		overflow: hidden;
-	}
-
-	.description {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		line-height: 1.2;
-	}
-
 	.time {
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
-	}
-
-	.time span {
-		font-size: 0.7em;
 	}
 
 	.slider {
