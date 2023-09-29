@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import { tracks } from "./tracks";
 
 	export let track
@@ -13,7 +14,19 @@
 
 	let audio;
 	console.log(title)
-	let guessedTitle = "";
+	let guessedTitle; 
+	onMount(() => {
+		guessedTitle.addEventListener('keydown', (event) => {
+			  if (event.key === 'Enter') {
+				console.log("JFKLDASF", guessedTitle);
+				if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
+					console.log("guesed", guessedTitle);
+					audio.pause()
+				}
+			
+			  }
+			});
+	}); 
 
 	function handleAudioLoaded() {
     if (audio) {
@@ -49,24 +62,8 @@
 	</div> 
 
 
-	
-	<div class = "input">
-		<script>
-			let inputValue = '';
-
-			function handleKeyDown(event) {
-  				if (event.key === 'Enter') {
-				alert(`Entered value: ${inputValue}`);
-				const audio = document.getElementById('audio');
-        		if (audio) {
-          			audio.stop(); 
-        		}
-  			}
-}
-
-		</script>
-		<input type="text" bind:value={inputValue} on:keydown={handleKeyDown} placeholder="Song Name"/>
-		
+	<div>
+		<input class = "input" type="text" bind:this={guessedTitle} placeholder="Song Name">
 	</div>
 
 	
@@ -75,13 +72,15 @@
 <style>
 
 	.input {	
-		background-color: #04AA6D;
+		background-color: #3c414a;
   		border: none;
-  		/* color: white; */
+		align-items: center;
+		width: 30em;
   		padding: 16px 32px;
   		text-decoration: none;
- 		 margin: 4px 2px;
+ 		margin: 0px 0px;
   		cursor: pointer;
+		border-radius: 0.5em;
 	}
 	
 	.player {
@@ -120,17 +119,23 @@
 	}
 
 	.slider {
+		align-items: center;
 		flex: 1;
 		height: 0.5em;
 		background: #754d4d;
 		border-radius: 0.5em;
 		overflow: hidden;
+		display: flex;
+		
 
+		
 	}
 
 	.progress {
+		align-items: center;
 		width: calc(100 * var(--progress));
 		height: 100%;
+		border-radius: 0.5em;
 		background: #ffd8d8;
 	}
 </style>

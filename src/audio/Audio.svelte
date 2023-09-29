@@ -1,15 +1,19 @@
 <script>
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { tracks } from './tracks.js';
+	import CircleProgressBar from './CircleProgressBar.svelte'
 	function getRandomTrack() {
   		const randomIndex = Math.floor(Math.random() * tracks.length);
   		return tracks[randomIndex];
 	}
+	let time = 2;
 </script>
 
 <div class = "centered">
 	<AudioPlayer track = {getRandomTrack()} />
 </div>
+
+<CircleProgressBar countdown={time} />
 
 
 <style>
