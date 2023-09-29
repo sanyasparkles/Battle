@@ -11,6 +11,7 @@
     let now = Date.now();
     let end = now + countdown * 1000;
   
+    export let count;
     $: count = Math.round((end - now) / 1000);
     $: h = Math.floor(count / 3600);
     $: m = Math.floor((count - h * 3600) / 60);
@@ -33,13 +34,7 @@
     $: offset.set(Math.max(count - 1, 0) / countdown);
     $: rotation.set((Math.max(count - 1, 0) / countdown) * 360);
   
-    $: {
-    if (count === 0) {
-      clearInterval(interval);
-      console.log("DDUUUUUU");
-      dispatch("countdownFinished");
-    }
-  }
+   
     
   
     function handleStart() {
@@ -119,14 +114,7 @@
       justify-content: space-between;
     }
   
-    @supports (display: grid) {
-      div {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        justify-content: initial;
-        justify-items: center;
-      }
-    }
+  
   
   </style>
   

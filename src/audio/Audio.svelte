@@ -7,13 +7,29 @@
   		return tracks[randomIndex];
 	}
 	let time = 2;
+	let count;
+
+	function startGame() {
+		//show elemeents
+	}
+
+	$: {
+    if (count === 0) {
+      
+      //time up screen w/ results
+    }
+	}
 </script>
+
+<button on:click={startGame}>
+	Start Game
+</button>
 
 <div class = "centered">
 	<AudioPlayer track = {getRandomTrack()} />
 </div>
 
-<CircleProgressBar countdown={time} />
+<CircleProgressBar count={count} countdown={time} />
 
 
 <style>
