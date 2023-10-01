@@ -7,11 +7,18 @@
     const dispatch = createEventDispatcher();
   
     export let countdown;
+
+    
   
     let now = Date.now();
     let end = now + countdown * 1000;
   
     export let count;
+
+    // if (count === 0) {
+		// console.log("JDJFA;SDFJKALSJFL;AS");
+    //   //time up screen w/ results
+    // }
     $: count = Math.round((end - now) / 1000);
     $: h = Math.floor(count / 3600);
     $: m = Math.floor((count - h * 3600) / 60);
@@ -111,7 +118,9 @@
     div {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      /* justify-content: space-between; */
+      justify-content: center;
+      gap: 20px;
     }
   
   
