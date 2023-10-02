@@ -15,10 +15,10 @@
   
     export let count;
 
-    // if (count === 0) {
-		// console.log("JDJFA;SDFJKALSJFL;AS");
-    //   //time up screen w/ results
-    // }
+    if (count === 0) {
+		console.log("JDJFA;SDFJKALSJFL;AS");
+      //time up screen w/ results
+    }
     $: count = Math.round((end - now) / 1000);
     $: h = Math.floor(count / 3600);
     $: m = Math.floor((count - h * 3600) / 60);
