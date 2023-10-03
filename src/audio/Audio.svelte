@@ -2,23 +2,25 @@
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { tracks } from './tracks.js';
 	import CircleProgressBar from './CircleProgressBar.svelte'
+	import { newSong } from '/store.js';
 	function getRandomTrack() {
   		const randomIndex = Math.floor(Math.random() * tracks.length);
   		return tracks[randomIndex];
 	}
 	let time = 2;
-	let count = 1;
 
 	let isGameStarted = false;
+
 	function startGame() {
 		isGameStarted=true;
 	}
 
+
 	$: {
-    if (count === 0) {
-		console.log("yay we good");
-      //time up screen w/ results
-    }
+		if ($newSong === false) {
+			console.log("NEW SONG RECOGNIZED")
+			newSong.set(true)
+		}
 	}
 </script>
 
@@ -28,10 +30,9 @@
 </button>
 {/if}
 
-{#if isGameStarted}
-
+{#if isGameStarted && $newSong}
 <div class = "centered">
-	<CircleProgressBar count={count} countdown={time} />
+	<CircleProgressBar countdown={time} />
 	<AudioPlayer track = {getRandomTrack()} />
 </div>
 

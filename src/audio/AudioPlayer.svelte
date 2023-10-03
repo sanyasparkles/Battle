@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { tracks } from "./tracks";
+	import { newSong } from '/Users/nmunjal/Downloads/Battle/public/store.js';
 
 	export let track
 	const src = track.src;
@@ -12,6 +13,7 @@
 	let time = 0
 	let paused = true;
 
+
 	let audio;
 	console.log(title)
 	let guessedTitle; 
@@ -20,8 +22,9 @@
 			  if (event.key === 'Enter') {
 				console.log("JFKLDASF", guessedTitle);
 				if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-					console.log("guesed", guessedTitle);
+					console.log("guesed RIGHT", guessedTitle);
 					audio.pause()
+					newSong.set(false);
 				}
 			
 			  }
