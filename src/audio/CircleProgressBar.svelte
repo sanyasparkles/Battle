@@ -13,7 +13,7 @@
     let now = Date.now();
     let end = now + countdown * 1000;
   
-    export let count;
+    let count = 1;
 
     // if (count === 0) {
 		// console.log("JDJFA;SDFJKALSJFL;AS");

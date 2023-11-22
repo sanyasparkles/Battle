@@ -1,46 +1,70 @@
 <script>
     import { onMount } from "svelte";
     import { tracks } from "./tracks";
-	import { newSong } from '/Users/nmunjal/Downloads/Battle/public/store.js';
-
-	export let track
-	const src = track.src;
-	const title = track.title;
-	const songLength = track.songLength;
-
-	let startTime = Math.floor(Math.random() * (songLength-20));
-
-	let time = 0
-	let paused = true;
+	// import { newSong } from "./store.js";
 
 
-	let audio;
-	console.log(title)
-	let guessedTitle; 
-	onMount(() => {
-		guessedTitle.addEventListener('keydown', (event) => {
-			  if (event.key === 'Enter') {
-				console.log("JFKLDASF", guessedTitle);
-				if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-					console.log("guesed RIGHT", guessedTitle);
-					audio.pause()
-					newSong.set(false);
-				}
+	function getRandomTrack() {
+  		const randomIndex = Math.floor(Math.random() * tracks.length);
+  		return tracks[randomIndex];
+	}
+
+
+	let track, src, title, songLength, startTime, time, paused, audio, guessedTitle
+	let newSong = true
+
+	$: { 
+		if (newSong) {
 			
-			  }
+			playNewRandomTrack();
+		}
+
+	}
+
+	function playNewRandomTrack() {
+		track = getRandomTrack()
+		src = track.src;
+		title = track.title;
+		songLength = track.songLength;
+
+		startTime = Math.floor(Math.random() * (songLength-20));
+
+		time = 0
+		paused = true;
+
+		console.log(title)
+
+		handleAudioLoaded()
+		
+		onMount(() => {
+			guessedTitle.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter') {
+					console.log("JFKLDASF", guessedTitle);
+					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
+						console.log("guesed RIGHT", guessedTitle);
+						audio.pause()
+						newSong = false;
+						newSong = true;
+					}
+			
+			  	}
 			});
-	}); 
+		}); 
 
+	
+
+		setTimeout(() => {
+        	audio.pause();
+      	}, 15 * 1000);
+    	
+
+	}
 	function handleAudioLoaded() {
-    if (audio) {
-      audio.currentTime = startTime;
-      audio.play(); 
-    }
-
-	setTimeout(() => {
-        audio.pause();
-      }, 15 * 1000); 
-    }
+    	if (audio) {
+      		audio.currentTime = startTime;
+      		audio.play(); 
+    	}
+	}
   
 
 </script>
@@ -82,6 +106,7 @@
   		padding: 16px 32px;
   		text-decoration: none;
  		margin: 0px 0px;
+		color: rgb(208, 205, 232);
   		cursor: pointer;
 		border-radius: 0.5em;
 	}

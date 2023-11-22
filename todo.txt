@@ -2,8 +2,15 @@
     - random gen 10 seconds of song
 
 
-get text boxes
-- if wrong --> x label
+start backend timer onclick:
+- show timer + audio 
+ - once slider=15 OR song matched
+   - new instance of AudioPlayer
+once backend timer ends:
+- show nothing
+
+
+
  - count same
 - if right --> check mark label for 0.5 secs --> count++
    - new audio
