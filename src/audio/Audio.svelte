@@ -2,6 +2,7 @@
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { tracks } from './tracks.js';
 	import CircleProgressBar from './CircleProgressBar.svelte'
+	import Points from './Points.svelte'
 	import { newSong } from "./store.js";
 	function getRandomTrack() {
   		const randomIndex = Math.floor(Math.random() * tracks.length);
@@ -20,8 +21,13 @@
 
 	$: {
 		if ($newSong === false) {
-			console.log("NEW SONG RECOGNIZED")
-			newSong.set(true)
+			console.log("NEW SONG FALSE")
+
+		}
+
+		if ($newSong === true) {
+			console.log("NEW SONG true")
+			
 		}
 
 		// if ($newSong === true) {
@@ -47,6 +53,7 @@
 <div class = "centered">
 	<CircleProgressBar countdown={time} />
 	<AudioPlayer />
+	<Points />
 </div>
 {/if}
 

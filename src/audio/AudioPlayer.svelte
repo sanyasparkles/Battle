@@ -1,8 +1,20 @@
 <script>
     import { onMount } from "svelte";
     import { tracks } from "./tracks";
-	// import { newSong } from "./store.js";
+	import { newSong, points} from "./store.js";
 
+	// $: {
+    //     if ($points === 0) {
+    //         console.log("OROIGONAPOOINTS = 0")
+    //     }
+    //     if ($points === 1) {
+    //         console.log("OROIGONAPOOINTS = 1")
+    //     }
+    //     if ($points === 2) {
+    //         console.log("OROIGONAPOOINTS = 2")
+    //     }
+
+    // }
 
 	function getRandomTrack() {
   		const randomIndex = Math.floor(Math.random() * tracks.length);
@@ -11,17 +23,25 @@
 
 
 	let track, src, title, songLength, startTime, time, paused, audio, guessedTitle
-	let newSong = true
+	// let newSong = true
 
 	$: { 
-		if (newSong) {
-			
+		if ($newSong) {
+			console.log("DJFSKADJSFKL;SADFAJSF;AS")
 			playNewRandomTrack();
 		}
+	}
 
+	$: {
+		if (time - startTime >= 15) {
+			guessedTitle.value = ""
+			$newSong = false;
+			$newSong = true;
+		}
 	}
 
 	function playNewRandomTrack() {
+
 		track = getRandomTrack()
 		src = track.src;
 		title = track.title;
@@ -33,35 +53,45 @@
 		paused = true;
 
 		console.log(title)
-
-		handleAudioLoaded()
 		
 		onMount(() => {
 			guessedTitle.addEventListener('keydown', (event) => {
 				if (event.key === 'Enter') {
-					console.log("JFKLDASF", guessedTitle);
 					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-						console.log("guesed RIGHT", guessedTitle);
+						$points++
+						
 						audio.pause()
-						newSong = false;
-						newSong = true;
+						$newSong = false;
+						$newSong = true;
+						guessedTitle.value = ""
 					}
 			
 			  	}
 			});
 		}); 
+		
 
-	
+		// setTimeout(() => {
+        // 	newSong = false;
+		// 	newSong = true;
+    	// }, 15 * 1000);
 
-		setTimeout(() => {
-        	audio.pause();
-      	}, 15 * 1000);
+
     	
 
 	}
+
+	setTimeout(() => {
+        audio.pause();
+    }, 60 * 3 * 1000);
+
+
+
 	function handleAudioLoaded() {
     	if (audio) {
       		audio.currentTime = startTime;
+			console.log("start time: ", startTime)
+			console.log("just time: ", time)
       		audio.play(); 
     	}
 	}
@@ -71,8 +101,8 @@
 
 <div class="player" class:paused>
 
-	<audio id="audio" bind:paused bind:currentTime={time} bind:this={audio} preload="metadata" on:loadedmetadata={handleAudioLoaded}>
-		<source {src} />
+	<audio id="audio" src={src} bind:paused bind:currentTime={time} bind:this={audio} preload="metadata" on:loadedmetadata={handleAudioLoaded}>
+		<!-- <source {src}/> -->
 		Your browser does not support the audio element.
 	</audio>
 	
