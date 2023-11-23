@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import { tracks } from "./tracks";
-	import { newSong, points} from "./store.js";
+    import { tracks } from "../js/tracks.js";
+	import { newSong, points} from "../js/store.js";
 
 	// $: {
     //     if ($points === 0) {

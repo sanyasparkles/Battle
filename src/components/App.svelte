@@ -1,5 +1,5 @@
 <script>
-  import Audio from './audio/Audio.svelte';
+  import Audio from './Audio.svelte';
 
 </script>
 

@@ -3,6 +3,7 @@
     import { tweened } from 'svelte/motion';
     import { linear as easing } from 'svelte/easing';
     import { fly } from 'svelte/transition';
+    import { isGameEnded } from '../js/store.js';
   
     const dispatch = createEventDispatcher();
   
@@ -15,10 +16,11 @@
   
     let count = 1;
 
-    // if (count === 0) {
-		// console.log("JDJFA;SDFJKALSJFL;AS");
-    //   //time up screen w/ results
-    // }
+    $: {
+      if (count === 0) {
+		    $isGameEnded = true
+      }
+    }
     $: count = Math.round((end - now) / 1000);
     $: h = Math.floor(count / 3600);
     $: m = Math.floor((count - h * 3600) / 60);
