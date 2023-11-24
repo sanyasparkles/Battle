@@ -8,7 +8,7 @@
   		const randomIndex = Math.floor(Math.random() * tracks.length);
   		return tracks[randomIndex];
 	}
-	let time = 10;
+	let time = 2 * 60;
 
 	let isGameStarted = false;
 
