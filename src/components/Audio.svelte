@@ -19,22 +19,22 @@
 	let audioX = null
 	// audioX = new AudioPlayer()
 
-	$: {
-		if ($newSong === false) {
-			console.log("NEW SONG FALSE")
+	// $: {
+	// 	if ($newSong === false) {
+	// 		// console.log("NEW SONG FALSE")
 
-		}
+	// 	}
 
-		if ($newSong === true) {
-			console.log("NEW SONG true")
+	// 	if ($newSong === true) {
+	// 		console.log("NEW SONG true")
 			
-		}
+	// 	}
 
-		// if ($newSong === true) {
-		// 	console.log("getting new songo")
+	// 	// if ($newSong === true) {
+	// 	// 	console.log("getting new songo")
 
-		// }
-	}
+	// 	// }
+	// }
 	
 
 	
@@ -53,10 +53,14 @@
 <div class = "centered">
 	<CircleProgressBar countdown={time} />
 	<AudioPlayer />
-	<Points />
 </div>
 {/if}
 
+{#if isGameStarted}
+<div class = "centered">
+	<Points />
+</div>
+{/if}
 
 
 

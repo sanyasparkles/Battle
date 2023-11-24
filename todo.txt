@@ -1,16 +1,9 @@
-- random song
-    - random gen 10 seconds of song
+
+peer instructinos
+https://github.com/peers/peerjs
 
 
-start backend timer onclick:
-- show timer + audio 
- - once slider=15 OR song matched
-   - new instance of AudioPlayer
-once backend timer ends:
-- show nothing
+peeer x ssvelte kit vid
+https://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyohttps://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyo
 
-
-
- - count same
-- if right --> check mark label for 0.5 secs --> count++
-   - new audio
+    "dev": "vite",

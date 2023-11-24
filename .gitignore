@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 index1.html
+todo.txt
 
 # Editor directories and files
 .vscode/*

@@ -27,7 +27,7 @@
 
 	$: { 
 		if ($newSong) {
-			console.log("DJFSKADJSFKL;SADFAJSF;AS")
+			// console.log("DJFSKADJSFKL;SADFAJSF;AS")
 			playNewRandomTrack();
 		}
 	}
@@ -90,8 +90,8 @@
 	function handleAudioLoaded() {
     	if (audio) {
       		audio.currentTime = startTime;
-			console.log("start time: ", startTime)
-			console.log("just time: ", time)
+			// console.log("start time: ", startTime)
+			// console.log("just time: ", time)
       		audio.play(); 
     	}
 	}
