@@ -159,13 +159,7 @@
 		filter: drop-shadow(0.5em 0.5em 1em rgba(0,0,0,0.1));
 	}
 	
-	button {
-		width: 100%;
-		aspect-ratio: 1;
-		background-repeat: no-repeat;
-		background-position: 50% 50%;
-		border-radius: 50%;
-	}
+
 
 	.time {
 		width: 30em;

@@ -63,7 +63,7 @@ export const tracks = [
 
 	{
 		src: './music/10.opus',
-		title: 'Labryinth',
+		title: 'Labyrinth',
 		artist: 'Taylor Swift',
 		songLength: 248
 	},

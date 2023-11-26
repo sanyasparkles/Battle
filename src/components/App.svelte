@@ -1,13 +1,15 @@
 <script>
   import Audio from './Audio.svelte';
-  import ShareLink from './ShareLink.svelte';
+  import JoinLink from './JoinLink.svelte';
+  import Networking from './Networking.svelte';
 
 </script>
 
 <main>
   <h1>Battle Networking</h1>
   
-  <ShareLink />
+  <JoinLink />
+  <Networking />
   <Audio />
 
 

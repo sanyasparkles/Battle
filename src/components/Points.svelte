@@ -1,13 +1,13 @@
 <script>
     import { points} from "../js/store.js";
-    import { Peer } from "peerjs";
+    // import { Peer } from "peerjs";
 
 
-    const peerA = new Peer();
+    // const peerA = new Peer();
 
-    console.log("id", peerA.id)
+    // console.log("id", peerA.id)
 
-    // const peerB = new Peer("87");
+    // // const peerB = new Peer("87");
 
 
 

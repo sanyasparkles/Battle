@@ -3,21 +3,20 @@
 	import { tracks } from '../js/tracks.js';
 	import CircleProgressBar from './CircleProgressBar.svelte'
 	import Points from './Points.svelte'
-	import { newSong, isGameEnded } from "../js/store.js";
+	import { isGameStarted, newSong, isGameEnded } from "../js/store.js";
 	function getRandomTrack() {
   		const randomIndex = Math.floor(Math.random() * tracks.length);
   		return tracks[randomIndex];
 	}
 	let time = 2 * 60;
 
-	let isGameStarted = false;
+	
 
 	function startGame() {
-		isGameStarted=true;
+		$isGameStarted=true;
 	}
 
-	let audioX = null
-	// audioX = new AudioPlayer()
+	
 
 	// $: {
 	// 	if ($newSong === false) {
@@ -43,20 +42,20 @@
 
 
 
-{#if !isGameStarted}
+{#if !$isGameStarted}
 <button on:click={startGame}>
 	Start Game
 </button>
 {/if}
 
-{#if isGameStarted && !$isGameEnded}
+{#if $isGameStarted && !$isGameEnded}
 <div class = "centered">
 	<CircleProgressBar countdown={time} />
 	<AudioPlayer />
 </div>
 {/if}
 
-{#if isGameStarted}
+{#if $isGameStarted}
 <div class = "centered">
 	<Points />
 </div>

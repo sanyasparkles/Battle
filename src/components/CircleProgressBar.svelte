@@ -1,3 +1,4 @@
+//taken from svelte tutorial
 <script>
     import { createEventDispatcher, onDestroy } from 'svelte';
     import { tweened } from 'svelte/motion';
@@ -115,14 +116,6 @@
       height: auto;
       display: block;
       margin: 0 auto 2rem;
-    }
-  
-    div {
-      display: flex;
-      align-items: center;
-      /* justify-content: space-between; */
-      justify-content: center;
-      gap: 20px;
     }
   
   
