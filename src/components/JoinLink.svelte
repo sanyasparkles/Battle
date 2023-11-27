@@ -1,5 +1,6 @@
 <script>
     import {myid, mainid, mainPeer} from '../js/store.js'
+    import sendToMain from './Networking.svelte'
     let link
 
       //sets as either main or side peer
@@ -9,22 +10,16 @@
 
     $: {
         if ($mainid === null) {
-            $mainPeer = true;
-            console.log("main")
+            $mainPeer = true
         }
-
         else if ($mainid !== null && $mainid !== "") {
             $mainPeer = false;
-            console.log("main is ", mainid)
         } 
     }
-
     const currentURL = window.location.href.split('?')[0];
     $: link = `${currentURL}?myid=${$myid}`
     console.log(link)
  
-
-
 </script>
 
 <div class="join-link">

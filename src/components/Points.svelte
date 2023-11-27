@@ -1,40 +1,27 @@
 <script>
-    import { points} from "../js/store.js";
-    // import { Peer } from "peerjs";
+    import { myid, mainPeer, profiles, points} from "../js/store.js";
+    import { startReceivingMain, sendProfile } from "../js/networking.js"
 
 
-    // const peerA = new Peer();
+    $: {
+        if ($myid != "") {
+            sendProfile()
+            if($mainPeer) {
+                startReceivingMain()
+            }
+        }
+        
 
-    // console.log("id", peerA.id)
-
-    // // const peerB = new Peer("87");
-
-
-
-    // const conn = peerA.connect("87");
-    // conn.on("open", () => {
-    //     conn.send("HEY BESTIE");
-    // })
-
-
-
-
-
-
-    // $: {
-    //     if ($points === 0) {
-    //         console.log("ponits = 0")
-    //     }
-    //     if ($points === 1) {
-    //         console.log("ponits = 1")
-    //     }
-    //     if ($points === 2) {
-    //         console.log("ponits = 2")
-    //     }
-
-    // }
+    }
+    
+    
+    
 </script>
 
-<p>Score:</p>
-<p>{$points}</p>
 
+<ul>
+    {#each Object.keys($profiles) as id}
+        <p>{$profiles[id].name}</p>
+        <p>{$profiles[id].points}</p>
+    {/each}
+</ul>

@@ -1,6 +1,7 @@
 <script>
   import Audio from './Audio.svelte';
   import JoinLink from './JoinLink.svelte';
+  import Points from './Points.svelte';
   import Networking from './Networking.svelte';
 
 </script>
@@ -8,9 +9,11 @@
 <main>
   <h1>Battle Networking</h1>
   
+  <Points />
   <JoinLink />
   <Networking />
   <Audio />
+
 
 
   

@@ -7,5 +7,36 @@ export const isGameEnded = writable(false);
 export const mainPeer = writable(true);
 export const mainid = writable("");
 export const myid = writable("");
+export const myName = writable("qia qia");
 
+
+export const ids = writable([]);
+
+export const profiles = writable({});
+
+
+export function addID(newId) {
+    ids.update(existingIds => {
+      return [...existingIds, newId];
+    });
+  }
+
+export function addProfile(id, newName) {
+    profiles.update(dictionary => {
+      dictionary[id] = { name: newName, points: 0 };
+      return dictionary;
+    });
+  }
+
+export function addPoints(id) {
+    profiles.update(dictionary => {
+      if (dictionary[id]) {
+        dictionary[id].points += 1;
+      }
+      else {
+        console.log("id not found")
+      }
+      return dictionary;
+    });
+  }
 
