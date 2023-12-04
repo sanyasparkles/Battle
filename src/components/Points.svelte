@@ -1,18 +1,21 @@
 <script>
     import { myid, mainPeer, profiles, points} from "../js/store.js";
-    import { startReceivingMain, sendProfile } from "../js/networking.js"
+    import { startReceivingMain, sendProfile, createPeer } from "../js/networking.js"
 
 
-    $: {
-        if ($myid != "") {
-            sendProfile()
-            if($mainPeer) {
-                startReceivingMain()
-            }
-        }
+    // createPeer
+    // $: {
+    //     if ($myid != "") {
+    //         if($mainPeer) {
+    //             startReceivingMain()
+    //         }
+    //         sendProfile()
+            
+            
+    //     }
         
 
-    }
+    // }
     
     
     

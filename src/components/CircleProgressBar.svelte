@@ -1,4 +1,3 @@
-//taken from svelte tutorial
 <script>
     import { createEventDispatcher, onDestroy } from 'svelte';
     import { tweened } from 'svelte/motion';

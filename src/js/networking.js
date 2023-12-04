@@ -1,21 +1,30 @@
-import { profiles, addProfile, addPoints, ids, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded } from "./store.js";
+import { profiles, addProfile, addPoints, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded, nameSent } from "./store.js";
 import { get } from 'svelte/store';
 import {Peer} from 'peerjs'
-var peer = new Peer();
+var peer;
 var conn
 let link
 
+export function createPeer() {
+  peer = new Peer()
+  peer.on("open",(id)=>{
+    myid.set(id)
+    console.log(get(myid))
+})
+}
 
+export async function sendProfile() {
+  nameSent.set(true)
+   createPeer()
 
-export function sendProfile() {
+   await until(_ => get(myid) != "");
+      startReceivingMain()
+    
+    
+    
 
-    peer.on("open",(id)=>{
-        myid.set(id)
-    })
+    console.log("HERE")
 
-    if (!get(mainPeer)) {
-        myName.set("sanya")
-    }
     const data = {
         name: get(myName),
         id: get(myid)
@@ -28,10 +37,28 @@ export function sendProfile() {
     }
 }
 
+//main only
 function receiveProfile(id, name) {
-    ids.update(ids => [...ids, id]);
     addProfile(id, name)
+    if (get(mainPeer)) {
+      sendToOne(id, get(profiles))
+    }
     
+}
+
+function receiveAllProfiles(data) {
+  profiles.set(data)
+  sendToAll(get(profiles))
+}
+
+
+
+function sendToOne(id, data) {
+  conn = peer.connect(id)
+  conn.on("open",() => {
+    console.log('sent', data, 'to ', id)
+    conn.send(data)
+  })
 }
 
 function sendToMain(data) {
@@ -43,27 +70,32 @@ function sendToMain(data) {
 }
 
 function sendToAll(data) {
-    const currentIDs = get(ids)
-    currentIDs.forEach(id => {
-        if (id !== get(myid)) {
-            conn = peer.connect(id)
-            conn.on("open",() => {
-                conn.send(data)
-            })
-        }
-    })
+  Object.keys(profiles).forEach(id => {
+    if (id !== get(myid)) {
+      conn = peer.connect(id)
+      conn.on("open",() => {
+          conn.send(data)
+          console.log('sent', data, 'to ', id)
+      })
+  }
+  });
+
 }
 
  
 
 export function startReceivingMain() {
-    
+   
     peer.on("connection",(conn)=>{ 
-        console.log('BEJKLADFS;')
+        
     conn.on("data",(data)=>{
-      //for main receiving profiles
+      
       console.log("received", data)
-      if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
+
+      if (typeof data === 'object' && data !== null && "name" in data && "id" in data && "points" in data) {
+        receiveAllProfiles()
+      }
+      else if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
         receiveProfile(data.id, data.name)
       }
 
@@ -72,25 +104,6 @@ export function startReceivingMain() {
 
 }
 
-function startReceivingPeer() {
-    peer.on("connection",(conn)=>{ 
-    conn.on("data",(data)=>{
-      if (data === "start_game") {
-          isGameStarted.set(true)
-      }
-
-      //for main receiving profiles
-      if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
-        receiveProfile(data.id, data.name)
-      }
-
-      if(get(mainPeer) && get(isGameStarted)) {
-        sendToAll(data)
-      }
-    })
-  })
-
-}
 
 
 
@@ -107,3 +120,15 @@ export function startGame() {
 
 
 
+
+
+
+function until(conditionFunction) {
+
+  const poll = resolve => {
+    if(conditionFunction()) resolve();
+    else setTimeout(_ => poll(resolve), 400);
+  }
+
+  return new Promise(poll);
+}

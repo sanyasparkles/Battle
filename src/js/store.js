@@ -7,19 +7,15 @@ export const isGameEnded = writable(false);
 export const mainPeer = writable(true);
 export const mainid = writable("");
 export const myid = writable("");
+export const nameSent = writable(false);
 export const myName = writable("qia qia");
 
 
-export const ids = writable([]);
 
 export const profiles = writable({});
 
 
-export function addID(newId) {
-    ids.update(existingIds => {
-      return [...existingIds, newId];
-    });
-  }
+
 
 export function addProfile(id, newName) {
     profiles.update(dictionary => {
