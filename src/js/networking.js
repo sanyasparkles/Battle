@@ -1,10 +1,17 @@
-import { profiles, addProfile, addPoints, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded, nameSent } from "./store.js";
+import { currTrack, currStartTime, profiles, addProfile, addPoints, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded, nameSent } from "./store.js";
+import { tracks } from "../js/tracks.js";
 import { get } from 'svelte/store';
 import {Peer} from 'peerjs'
+// import {} from '../components/AudioPlayer.svelte'
+
 var peer;
 var conn
+var mainconn
 let link
 
+var hivemind = []
+
+//profiles
 export function createPeer() {
   peer = new Peer()
   peer.on("open",(id)=>{
@@ -13,6 +20,7 @@ export function createPeer() {
 })
 }
 
+
 export async function sendProfile() {
   nameSent.set(true)
    createPeer()
@@ -20,69 +28,109 @@ export async function sendProfile() {
    await until(_ => get(myid) != "");
       startReceivingMain()
     
-    
-    
-
-    console.log("HERE")
 
     const data = {
         name: get(myName),
-        id: get(myid)
+        id: get(myid),
       };
     if (get(mainPeer)) {
        addProfile(data.id, data.name)
     }
     else {
-        sendToMain(data)
+      console.log("HERE")
+
+      conn = peer.connect(get(mainid))
+      conn.on("open",() => {
+        mainconn = conn
+        console.log('sent', data, 'to main id ', get(mainid))
+        conn.send(data)
+      }) 
     }
 }
 
-//main only
-function receiveProfile(id, name) {
-    addProfile(id, name)
-    if (get(mainPeer)) {
-      sendToOne(id, get(profiles))
-    }
+
+//sending
+export function sendToAll(data) {
+
+  if (get(mainPeer)) {
+    console.log('sent', data, 'to all')
+    hivemind.forEach((conn) => {
+      conn.send(data)
+    });
+    
+  }  
+
+  else { 
+    mainconn.on("open",() => {
+      mainconn.send(data)
+      console.log('sent', data, 'to main')
+  })
+  }
+}
+
+
+//receiving
+function receiveProfile(data) {
+    addProfile(data.id, data.name)
+    conn = null
+    conn = peer.connect(data.id)
+    conn.on("open",() => {
+      hivemind.push(conn)
+      console.log("hivemind ", hivemind)
+      if (get(mainPeer)) {
+        sendToAll(get(profiles))
+      }
+    }) 
+
     
 }
 
 function receiveAllProfiles(data) {
-  profiles.set(data)
-  sendToAll(get(profiles))
-}
-
-
-
-function sendToOne(id, data) {
-  conn = peer.connect(id)
-  conn.on("open",() => {
-    console.log('sent', data, 'to ', id)
-    conn.send(data)
-  })
-}
-
-function sendToMain(data) {
-  conn = peer.connect(get(mainid))
-  conn.on("open",() => {
-    console.log('sent', data, 'to main id ', get(mainid))
-    conn.send(data)
-  })
-}
-
-function sendToAll(data) {
-  Object.keys(profiles).forEach(id => {
-    if (id !== get(myid)) {
-      conn = peer.connect(id)
-      conn.on("open",() => {
-          conn.send(data)
-          console.log('sent', data, 'to ', id)
-      })
+  console.log(data)
+  profiles.set(Object.assign(data))
+  if (get(mainPeer)) {
+    sendToAll(get(profiles))
   }
-  });
-
 }
 
- 
+function receiveStartGame() {
+  isGameStarted.set(true)
+}
+
+export function receivePointWinner(data) {
+  let currWinnerPoints = get(profiles)[data.winner].points + 1;
+  (profiles[data.winner].points).set(currWinnerPoints)
+  
+  if (get(mainPeer)) {
+    sendToAll(data)
+    getNewSong()
+  }
+}
+
+export function receiveSong(data) {
+  currTrack.set(data.track)
+  currStartTime.set(data.startTime)
+  newSong.set(false)
+  newSong.set(true)
+}
+
+export function getNewSong() {
+  console.log("getting new song")
+  let track = getRandomTrack()
+  let songLength = track.songLength;
+  let startTime = Math.floor(Math.random() * (songLength-20));
+
+  let data = {
+    track: track,
+    startTime: startTime
+  }
+  sendToAll(data)
+  currTrack.set(data.track)
+  currStartTime.set(data.startTime)
+  newSong.set(false)
+  newSong.set(true)
+}
+
 
 export function startReceivingMain() {
    
@@ -92,12 +140,27 @@ export function startReceivingMain() {
       
       console.log("received", data)
 
-      if (typeof data === 'object' && data !== null && "name" in data && "id" in data && "points" in data) {
-        receiveAllProfiles()
+
+
+      if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
+        console.log('received 1 profile')
+        receiveProfile(data)
       }
-      else if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
-        receiveProfile(data.id, data.name)
+      else if (data === "start_game") {
+        receiveStartGame()
       }
+      else if (typeof data === 'object' && data !== null && "winner" in data) {
+        console.log("poooooooochicken")
+        receivePointWinner(data)
+      }
+      else if (typeof data === 'object' && data !== null && "track" in data && "startTime" in data) {
+        receiveSong(data)
+      }
+      else if (typeof data === 'object' && data !== null && data !== "start_game" && !get(isGameStarted)) {
+        console.log("received full profiles")
+        receiveAllProfiles(data)
+      }
+
 
     })
   })
@@ -110,19 +173,21 @@ export function startReceivingMain() {
 export function startGame() {
     isGameStarted.set(true);
     if (get(mainPeer)) {
-        sendToAll(get(profiles))
         sendToAll("start_game")
+        getNewSong()
+
     }
+
 }
 
-    
+function getRandomTrack() {
+  const randomIndex = Math.floor(Math.random() * tracks.length);
+  return tracks[randomIndex];
+}
+
+
+
   
-
-
-
-
-
-
 function until(conditionFunction) {
 
   const poll = resolve => {
@@ -132,3 +197,9 @@ function until(conditionFunction) {
 
   return new Promise(poll);
 }
+
+
+
+
+
+

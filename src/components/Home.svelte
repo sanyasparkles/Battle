@@ -62,15 +62,12 @@
 <div class = "centered">
 	<CircleProgressBar countdown={time} />
 	<AudioPlayer />
-	<Points />
 </div>
 {/if}
 
-<!-- {#if $isGameStarted} -->
 <div class = "centered">
 	<Points />
 </div>
-<!-- {/if} -->
 
 
 

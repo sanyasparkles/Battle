@@ -7,3 +7,8 @@ peeer x ssvelte kit vid
 https://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyohttps://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyo
 
     "dev": "vite",
+
+
+once profile sent to main --> also sent to everyone else
+
+once someone joins --> send them previous people's profiles

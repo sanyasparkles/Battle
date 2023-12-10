@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export const newSong = writable(true);
+export const newSong = writable(false);
 export const points = writable(0);
 export const isGameStarted = writable(false);
 export const isGameEnded = writable(false);
@@ -13,6 +13,13 @@ export const myName = writable("qia qia");
 
 
 export const profiles = writable({});
+// export const hivemind = writable({});
+
+export const currTrack = writable({});
+export const currStartTime = writable(0);
+
+
+
 
 
 
@@ -23,6 +30,14 @@ export function addProfile(id, newName) {
       return dictionary;
     });
   }
+
+
+  // export function addBeeToHive(id, conn) {
+  //   hivemind.update(dictionary => {
+  //     dictionary[id] = { connection: conn };
+  //     return dictionary;
+  //   });
+  // }
 
 export function addPoints(id) {
     profiles.update(dictionary => {

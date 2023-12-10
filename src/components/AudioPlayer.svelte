@@ -1,69 +1,67 @@
 <script>
     import { onMount } from "svelte";
     import { tracks } from "../js/tracks.js";
-	import { newSong, points} from "../js/store.js";
+	import { mainPeer, currTrack, currStartTime, myid, newSong, points, profiles} from "../js/store.js";
+	import { getNewSong, receivePointWinner, receiveSong, sendToAll} from "../js/networking.js";
+    import { get } from "svelte/store";
 
-	// $: {
-    //     if ($points === 0) {
-    //         console.log("OROIGONAPOOINTS = 0")
-    //     }
-    //     if ($points === 1) {
-    //         console.log("OROIGONAPOOINTS = 1")
-    //     }
-    //     if ($points === 2) {
-    //         console.log("OROIGONAPOOINTS = 2")
-    //     }
+	export const poo = ''
 
-    // }
+	
 
-	function getRandomTrack() {
-  		const randomIndex = Math.floor(Math.random() * tracks.length);
-  		return tracks[randomIndex];
-	}
+	let track, startTime, src, title, songLength, time, paused, audio, guessedTitle, prevTrack
+	let overtime = true
 
 
-	let track, src, title, songLength, startTime, time, paused, audio, guessedTitle
-	// let newSong = true
 
-	$: { 
-		if ($newSong) {
-			// console.log("DJFSKADJSFKL;SADFAJSF;AS")
-			playNewRandomTrack();
-		}
-	}
+	
+
 
 	$: {
-		if (time - startTime >= 15) {
+		if ($newSong) {
+			track = $currTrack
+			startTime = $currStartTime
+			console.log("HEREEE")
+			// if (audio) {
+			// 	audio.pause()
+			// }
+			playNewRandomTrack()
+			overtime = true;
+			
+
+		}
+	}
+	
+
+	$: {
+		if (time - startTime >= 15 && overtime) {
 			guessedTitle.value = ""
-			$newSong = false;
-			$newSong = true;
+			if ($mainPeer) {
+				getNewSong()
+				overtime = false
+			}
 		}
 	}
 
+	
 	function playNewRandomTrack() {
 
-		track = getRandomTrack()
 		src = track.src;
 		title = track.title;
-		songLength = track.songLength;
-
-		startTime = Math.floor(Math.random() * (songLength-20));
 
 		time = 0
 		paused = true;
 
-		console.log(title)
-		
 		onMount(() => {
 			guessedTitle.addEventListener('keydown', (event) => {
 				if (event.key === 'Enter') {
 					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-						$points++
 						
-						audio.pause()
-						$newSong = false;
-						$newSong = true;
-						guessedTitle.value = ""
+						sendToAll({winner: $myid})
+						if ($mainPeer) {
+							$profiles[$myid].points++
+							getNewSong()
+						}
 					}
 			
 			  	}
@@ -82,7 +80,9 @@
 	}
 
 	setTimeout(() => {
-        audio.pause();
+		if (audio) {
+        	audio.pause();
+		}
     }, 60 * 3 * 1000);
 
 
