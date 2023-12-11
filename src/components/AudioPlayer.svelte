@@ -61,7 +61,10 @@
 		paused = true;
 
 		
-		onMount(() => {
+		
+	}
+
+	onMount(() => {
 			// guessedTitle.focus();
 			console.log("fooooo ");
 			
@@ -82,7 +85,6 @@
 			});
 		}); 
 		
-	}
 	
 
 	setTimeout(() => {
