@@ -17,14 +17,11 @@
 
     // }
 
-    // $: {
-    //     // if ($profiles !== null) {
-    //     //     console.log("profiles ", $profiles)
-    //     // }
-    //     if ($hivemind != null) {
-    //         console.log("hivemind ", $hivemind)
-    //     }
-    // }
+    $: {
+        if ($profiles !== null) {
+            console.log("profiles ", $profiles)
+        }
+    }
 
 
     

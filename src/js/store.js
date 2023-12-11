@@ -45,7 +45,7 @@ export function addPoints(id) {
         dictionary[id].points += 1;
       }
       else {
-        console.log("id not found")
+        console.log(id, " is id which is not found")
       }
       return dictionary;
     });

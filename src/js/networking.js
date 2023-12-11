@@ -61,10 +61,11 @@ export function sendToAll(data) {
   }  
 
   else { 
-    mainconn.on("open",() => {
+
+    // mainconn.on("open",() => {
       mainconn.send(data)
       console.log('sent', data, 'to main')
-  })
+  // })
   }
 }
 
@@ -98,8 +99,9 @@ function receiveStartGame() {
 }
 
 export function receivePointWinner(data) {
-  let currWinnerPoints = get(profiles)[data.winner].points + 1;
-  (profiles[data.winner].points).set(currWinnerPoints)
+  
+  //FIX BROKEN POINTS CAN'T UPDAATE ....ask chat perhaps????
+  addPoints(data.winner)
   
   if (get(mainPeer)) {
     sendToAll(data)
@@ -110,6 +112,8 @@ export function receivePointWinner(data) {
 export function receiveSong(data) {
   currTrack.set(data.track)
   currStartTime.set(data.startTime)
+  console.log("POOOOOPPPPP")
+  console.log(get(currTrack))
   newSong.set(false)
   newSong.set(true)
 }
@@ -125,10 +129,10 @@ export function getNewSong() {
     startTime: startTime
   }
   sendToAll(data)
-  currTrack.set(data.track)
-  currStartTime.set(data.startTime)
-  newSong.set(false)
-  newSong.set(true)
+  if(get(mainPeer)) {
+    console.log("receiiving own song", track.title)
+    receiveSong(data)
+  }
 }
 
 
@@ -188,7 +192,7 @@ function getRandomTrack() {
 
 
   
-function until(conditionFunction) {
+export function until(conditionFunction) {
 
   const poll = resolve => {
     if(conditionFunction()) resolve();

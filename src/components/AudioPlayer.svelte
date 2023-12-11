@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { tracks } from "../js/tracks.js";
 	import { mainPeer, currTrack, currStartTime, myid, newSong, points, profiles} from "../js/store.js";
-	import { getNewSong, receivePointWinner, receiveSong, sendToAll} from "../js/networking.js";
+	import { until, getNewSong, receivePointWinner, receiveSong, sendToAll} from "../js/networking.js";
     import { get } from "svelte/store";
 
 	export const poo = ''
@@ -13,7 +13,12 @@
 	let overtime = true
 
 
+	$: {
+		if ($newSong) {
+			console.log("new song true")
+		}
 
+	}
 	
 
 
@@ -26,7 +31,7 @@
 			// 	audio.pause()
 			// }
 			playNewRandomTrack()
-			overtime = true;
+			
 			
 
 		}
@@ -44,22 +49,31 @@
 	}
 
 	
-	function playNewRandomTrack() {
-
-		src = track.src;
-		title = track.title;
+	async function playNewRandomTrack() {
 
 		time = 0
+		// overtime = true;
+		src = track.src;
+		title = track.title;
+		console.log("title ", title)
+
+		
 		paused = true;
 
+		
 		onMount(() => {
+			// guessedTitle.focus();
+			console.log("fooooo ");
+			
 			guessedTitle.addEventListener('keydown', (event) => {
 				if (event.key === 'Enter') {
+					console.log("fee");
 					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-						
+						console.log("im right")
 						sendToAll({winner: $myid})
 						if ($mainPeer) {
 							$profiles[$myid].points++
+							console.log("linee 76 audoiplayer")
 							getNewSong()
 						}
 					}
@@ -68,16 +82,8 @@
 			});
 		}); 
 		
-
-		// setTimeout(() => {
-        // 	newSong = false;
-		// 	newSong = true;
-    	// }, 15 * 1000);
-
-
-    	
-
 	}
+	
 
 	setTimeout(() => {
 		if (audio) {
