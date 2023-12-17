@@ -42,7 +42,7 @@
 
 
 
-{#if !$isGameStarted && $mainPeer}
+{#if !$isGameStarted && $mainPeer && $nameSent}
 <button on:click={startGame}>
 	Start Game
 </button>
@@ -56,6 +56,7 @@
 <button on:click={sendProfile}>
 	Join Game
 </button>
+
 {/if}
 
 {#if $isGameStarted && !$isGameEnded}

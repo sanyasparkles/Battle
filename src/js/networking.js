@@ -38,12 +38,11 @@ export async function sendProfile() {
        addProfile(data.id, data.name)
     }
     else {
-      console.log("HERE")
 
       conn = peer.connect(get(mainid))
       conn.on("open",() => {
         mainconn = conn
-        console.log('sent', data, 'to main id ', get(mainid))
+        // console.log('sent', data, 'to main id ', get(mainid))
         conn.send(data)
       }) 
     }
@@ -54,7 +53,7 @@ export async function sendProfile() {
 export function sendToAll(data) {
 
   if (get(mainPeer)) {
-    console.log('sent', data, 'to all')
+    // console.log('sent', data, 'to all')
     hivemind.forEach((conn) => {
       conn.send(data)
     });
@@ -65,7 +64,7 @@ export function sendToAll(data) {
 
     // mainconn.on("open",() => {
       mainconn.send(data)
-      console.log('sent', data, 'to main')
+      // console.log('sent', data, 'to main')
   // })
   }
 }
@@ -78,7 +77,7 @@ function receiveProfile(data) {
     conn = peer.connect(data.id)
     conn.on("open",() => {
       hivemind.push(conn)
-      console.log("hivemind ", hivemind)
+      // console.log("hivemind ", hivemind)
       if (get(mainPeer)) {
         sendToAll(get(profiles))
       }
@@ -88,7 +87,7 @@ function receiveProfile(data) {
 }
 
 function receiveAllProfiles(data) {
-  console.log(data)
+  // console.log(data)
   profiles.set(Object.assign(data))
   if (get(mainPeer)) {
     sendToAll(get(profiles))
@@ -113,10 +112,10 @@ export function receivePointWinner(data) {
 export function receiveSong(data) {
   currTrack.set({...data.track})
   currStartTime.set(data.startTime)
-  console.log("POOOOOPPPPP")
-  console.log(get(currTrack));
+  // console.log("POOOOOPPPPP")
+  // console.log(get(currTrack));
   newSong.set(false)
-  console.log("new song is", get(newSong))
+  // console.log("new song is", get(newSong))
   tick().then(() => newSong.set(true));
   // setTimeout(() => newSong.set(true));
   // console.log("new song is", get(newSong))
@@ -124,7 +123,7 @@ export function receiveSong(data) {
 }
 
 export function getNewSong() {
-  console.log("getting new song")
+  // console.log("getting new song")
   let track = getRandomTrack()
   let songLength = track.songLength;
   let startTime = Math.floor(Math.random() * (songLength-20));
@@ -135,7 +134,7 @@ export function getNewSong() {
   }
   sendToAll(data)
   if(get(mainPeer)) {
-    console.log("receiiving own song", track.title)
+    // console.log("receiiving own song", track.title)
     receiveSong(data)
   }
 }
@@ -159,7 +158,7 @@ export function startReceivingMain() {
         receiveStartGame()
       }
       else if (typeof data === 'object' && data !== null && "winner" in data) {
-        console.log("poooooooochicken")
+        
         receivePointWinner(data)
       }
       else if (typeof data === 'object' && data !== null && "track" in data && "startTime" in data) {

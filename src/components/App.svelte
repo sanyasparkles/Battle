@@ -18,7 +18,7 @@
   
 
   <p class="read-the-docs">
-    Click link to share with friends
+    <!-- Click link to share with friends -->
   </p>
 </main>
 

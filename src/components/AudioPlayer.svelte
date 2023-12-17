@@ -7,30 +7,28 @@
 
 	export const poo = ''
 
-	
+	let firstSong = true
 
 	let track, startTime, src, title, songLength, time, paused, audio, guessedTitle, prevTrack
 	let overtime = true
 
 
-	$: {
-		if ($newSong) {
-			console.log("new song true")
-		}
-
-	}
-	
 
 
 	$: {
 		if ($newSong) {
+
 			track = $currTrack
 			startTime = $currStartTime
-			console.log("HEREEE")
 			// if (audio) {
 			// 	audio.pause()
 			// }
-			// guessedTitle.value = ""
+			console.log(track.title)
+
+			if (!firstSong) {
+				guessedTitle.value = ""
+			}
+				
 			playNewRandomTrack()
 
 		}
@@ -40,7 +38,6 @@
 	$: {
 		if (time - startTime >= 15 && overtime) {
 			guessedTitle.value = ""
-			console.log("time is up")
 			if ($mainPeer) {
 				getNewSong()
 				overtime = false
@@ -50,12 +47,12 @@
 
 	
 	async function playNewRandomTrack() {
-
+		firstSong = false;
 		time = 0
 		overtime = true;
 		src = track.src;
 		title = track.title;
-		console.log("title ", title)
+		// console.log("title ", title)
 
 		
 		paused = true;
@@ -66,17 +63,13 @@
 
 	onMount(() => {
 			// guessedTitle.focus();
-			console.log("fooooo ");
 			
 			guessedTitle.onkeydown = (event) => {
 				if (event.key === 'Enter') {
-					console.log("fee");
 					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
-						console.log("im right")
 						sendToAll({winner: $myid})
 						if ($mainPeer) {
 							$profiles[$myid].points++
-							console.log("linee 76 audoiplayer")
 							getNewSong()
 						}
 					}
@@ -98,8 +91,7 @@
 	function handleAudioLoaded() {
     	if (audio) {
       		audio.currentTime = startTime;
-			// console.log("start time: ", startTime)
-			// console.log("just time: ", time)
+		
       		audio.play(); 
     	}
 	}
@@ -107,10 +99,10 @@
 
 </script>
 
-<div class="player" class:paused>
+<div class="player centered" class:paused>
 
 	<audio id="audio" src={src} bind:paused bind:currentTime={time} bind:this={audio} preload="metadata" on:loadedmetadata={handleAudioLoaded}>
-		<!-- <source {src}/> -->
+		<source {src}/>
 		Your browser does not support the audio element.
 	</audio>
 	
@@ -167,6 +159,16 @@
 		filter: drop-shadow(0.5em 0.5em 1em rgba(0,0,0,0.1));
 	}
 	
+	.centered {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+		gap: 0.5em;
+		max-width: 40em;
+		margin: 0 auto;
+	}
+
 
 
 	.time {

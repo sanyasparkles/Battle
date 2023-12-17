@@ -19,7 +19,7 @@
 
     $: {
         if ($profiles !== null) {
-            console.log("profiles ", $profiles)
+            // console.log("profiles ", $profiles)
         }
     }
 
