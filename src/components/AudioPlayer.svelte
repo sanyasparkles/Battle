@@ -30,9 +30,8 @@
 			// if (audio) {
 			// 	audio.pause()
 			// }
+			// guessedTitle.value = ""
 			playNewRandomTrack()
-			
-			
 
 		}
 	}
@@ -41,6 +40,7 @@
 	$: {
 		if (time - startTime >= 15 && overtime) {
 			guessedTitle.value = ""
+			console.log("time is up")
 			if ($mainPeer) {
 				getNewSong()
 				overtime = false
@@ -52,7 +52,7 @@
 	async function playNewRandomTrack() {
 
 		time = 0
-		// overtime = true;
+		overtime = true;
 		src = track.src;
 		title = track.title;
 		console.log("title ", title)
@@ -68,7 +68,7 @@
 			// guessedTitle.focus();
 			console.log("fooooo ");
 			
-			guessedTitle.addEventListener('keydown', (event) => {
+			guessedTitle.onkeydown = (event) => {
 				if (event.key === 'Enter') {
 					console.log("fee");
 					if (title.toUpperCase() === guessedTitle.value.toUpperCase()) {
@@ -82,16 +82,16 @@
 					}
 			
 			  	}
-			});
-		}); 
+			}
+	});
 		
 	
 
-	setTimeout(() => {
-		if (audio) {
-        	audio.pause();
-		}
-    }, 60 * 3 * 1000);
+	// setTimeout(() => {
+	// 	if (audio) {
+    //     	audio.pause();
+	// 	}
+    // }, 60 * 3 * 1000);
 
 
 

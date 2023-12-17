@@ -9,11 +9,11 @@
 
         if ($mainid === null) {
             $mainPeer = true
-            console.log('ismain')
+            // console.log('ismain')
         }
         else if ($mainid !== null && $mainid !== "") {
             $mainPeer = false;
-            console.log('isnotmain')
+            // console.log('isnotmain')
 
         } 
     

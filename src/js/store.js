@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export const newSong = writable(false);
+export const newSong = writable(true);
 export const points = writable(0);
 export const isGameStarted = writable(false);
 export const isGameEnded = writable(false);
@@ -15,7 +15,7 @@ export const myName = writable("qia qia");
 export const profiles = writable({});
 // export const hivemind = writable({});
 
-export const currTrack = writable({});
+export const currTrack = writable(/** @type {{ src: string, title: string, artist: string, songLength: number }} */ ({}));
 export const currStartTime = writable(0);
 
 

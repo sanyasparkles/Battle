@@ -1,6 +1,7 @@
 import { currTrack, currStartTime, profiles, addProfile, addPoints, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded, nameSent } from "./store.js";
 import { tracks } from "../js/tracks.js";
 import { get } from 'svelte/store';
+import { tick } from 'svelte';
 import {Peer} from 'peerjs'
 // import {} from '../components/AudioPlayer.svelte'
 
@@ -16,7 +17,7 @@ export function createPeer() {
   peer = new Peer()
   peer.on("open",(id)=>{
     myid.set(id)
-    console.log(get(myid))
+    // console.log(get(myid))
 })
 }
 
@@ -110,12 +111,16 @@ export function receivePointWinner(data) {
 }
 
 export function receiveSong(data) {
-  currTrack.set(data.track)
+  currTrack.set({...data.track})
   currStartTime.set(data.startTime)
   console.log("POOOOOPPPPP")
-  console.log(get(currTrack))
+  console.log(get(currTrack));
   newSong.set(false)
-  newSong.set(true)
+  console.log("new song is", get(newSong))
+  tick().then(() => newSong.set(true));
+  // setTimeout(() => newSong.set(true));
+  // console.log("new song is", get(newSong))
+
 }
 
 export function getNewSong() {
@@ -147,7 +152,7 @@ export function startReceivingMain() {
 
 
       if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
-        console.log('received 1 profile')
+        // console.log('received 1 profile')
         receiveProfile(data)
       }
       else if (data === "start_game") {
