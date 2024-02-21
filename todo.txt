@@ -1,14 +1,7 @@
-
-peer instructinos
-https://github.com/peers/peerjs
-
-
-peeer x ssvelte kit vid
-https://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyohttps://www.youtube.com/watch?v=siD_SRdFrl0&ab_channel=SriEdyNurcahyo
-
-    "dev": "vite",
+add all songs
+add album filters
 
 
-once profile sent to main --> also sent to everyone else
+add easy way to not have to type full song
 
-once someone joins --> send them previous people's profiles
+

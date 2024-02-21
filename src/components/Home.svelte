@@ -6,69 +6,16 @@
 	import { myid, myName, nameSent, isGameStarted, newSong, isGameEnded, mainPeer } from "../js/store.js";
 	import {createPeer, sendProfile, startGame} from "../js/networking.js"
     import { get } from 'svelte/store';
-	function getRandomTrack() {
-  		const randomIndex = Math.floor(Math.random() * tracks.length);
-  		return tracks[randomIndex];
-	}
-	let time = 2 * 60;
 
-	var tyName
-
-	$: $myName = tyName
-
-
-
-	// $: {
-	// 	if ($newSong === false) {
-	// 		// console.log("NEW SONG FALSE")
-
-	// 	}
-
-	// 	if ($newSong === true) {
-	// 		console.log("NEW SONG true")
-			
-	// 	}
-
-	// 	// if ($newSong === true) {
-	// 	// 	console.log("getting new songo")
-
-	// 	// }
-	// }
-	
 
 	
 	
 </script>
 
+<h1 class = "color">
+	Pick Your Icon
+</h1>
 
-
-{#if !$isGameStarted && $mainPeer && $nameSent}
-<button on:click={startGame}>
-	Start Game
-</button>
-{/if}
-
-{#if !$isGameStarted && !$nameSent}
-	<input class = "input" type="text" bind:value={tyName} placeholder="Enter Your Name">
-{/if}
-
-{#if !$isGameStarted && !$nameSent}
-<button on:click={sendProfile}>
-	Join Game
-</button>
-
-{/if}
-
-{#if $isGameStarted && !$isGameEnded}
-<div class = "centered">
-	<CircleProgressBar countdown={time} />
-	<AudioPlayer />
-</div>
-{/if}
-
-<div class = "centered">
-	<Points />
-</div>
 
 
 
