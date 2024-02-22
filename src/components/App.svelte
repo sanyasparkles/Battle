@@ -1,5 +1,5 @@
 <script>
-  // import Audio from './Homeold.svelte';
+  import Audio from './Homeold.svelte';
   import JoinLink from './JoinLink.svelte';
   import Points from './Points.svelte';
   import Popup from './Popup.svelte';
@@ -12,11 +12,12 @@
   <Home />
   <!-- <h1>Battle Networking</h1> -->
 
-  <!-- <Popup /> -->
-<!--   
+  <Popup />
+ 
   <JoinLink />
-  <Audio /> -->
 
+
+  <Audio />
 
 
   

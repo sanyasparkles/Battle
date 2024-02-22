@@ -2,6 +2,8 @@
 	import Modal from './Modal.svelte';
     import { myid, myName, nameSent, isGameStarted, newSong, isGameEnded, mainPeer } from "../js/store.js";
     import { onMount } from "svelte";
+    import {createPeer, sendProfile, startGame} from "../js/networking.js"
+
 	let showModal = true;
 
     let nameComp;
@@ -13,6 +15,7 @@
 				if (event.key === 'Enter') {
                     console.log("here")
                     showModal = false;
+                    sendProfile()
 			  	}
 			}
 	});

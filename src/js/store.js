@@ -24,9 +24,9 @@ export const currStartTime = writable(0);
 
 
 
-export function addProfile(id, newName) {
+export function addProfile(id, newName, heartString) {
     profiles.update(dictionary => {
-      dictionary[id] = { name: newName, points: 0 };
+      dictionary[id] = { name: newName, points: 0, heart: heartString};
       return dictionary;
     });
   }

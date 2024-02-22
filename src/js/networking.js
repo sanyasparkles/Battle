@@ -1,8 +1,10 @@
 import { currTrack, currStartTime, profiles, addProfile, addPoints, myName, myid, mainid, mainPeer, isGameStarted, newSong, isGameEnded, nameSent } from "./store.js";
 import { tracks } from "../js/tracks.js";
+import { hearts } from "../js/hearts.js";
 import { get } from 'svelte/store';
 import { tick } from 'svelte';
 import {Peer} from 'peerjs'
+
 // import {} from '../components/AudioPlayer.svelte'
 
 var peer;
@@ -29,13 +31,14 @@ export async function sendProfile() {
    await until(_ => get(myid) != "");
       startReceivingMain()
     
-
+    let heart1 = getRandomHeart()
     const data = {
         name: get(myName),
         id: get(myid),
+        heart: heart1
       };
     if (get(mainPeer)) {
-       addProfile(data.id, data.name)
+       addProfile(data.id, data.name, data.heart)
     }
     else {
 
@@ -72,7 +75,7 @@ export function sendToAll(data) {
 
 //receiving
 function receiveProfile(data) {
-    addProfile(data.id, data.name)
+    addProfile(data.id, data.name, data.heart)
     conn = null
     conn = peer.connect(data.id)
     conn.on("open",() => {
@@ -150,8 +153,9 @@ export function startReceivingMain() {
 
 
 
-      if (typeof data === 'object' && data !== null && "name" in data && "id" in data) {
-        // console.log('received 1 profile')
+      if (typeof data === 'object' && data !== null && "name" in data && "id" in data && "heart" in data) {
+        console.log('received 1 profile')
+
         receiveProfile(data)
       }
       else if (data === "start_game") {
@@ -191,6 +195,11 @@ export function startGame() {
 function getRandomTrack() {
   const randomIndex = Math.floor(Math.random() * tracks.length);
   return tracks[randomIndex];
+}
+
+function getRandomHeart() {
+  const randomIndex = Math.floor(Math.random() * hearts.length);
+  return hearts[randomIndex];
 }
 
 
