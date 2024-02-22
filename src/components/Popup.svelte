@@ -59,7 +59,11 @@
      margin-top: 0px;
     color: rgb(208, 205, 232);
       cursor: pointer;
+      font-size: auto;
     border-radius: 0.5em;
+    font-weight: bold;
+    padding: 6px 0px;
+
 }
 
 </style>

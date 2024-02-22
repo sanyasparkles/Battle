@@ -2,7 +2,6 @@
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { tracks } from '../js/tracks.js';
 	import CircleProgressBar from './CircleProgressBar.svelte'
-	import Points from './Points.svelte'
 	import { myid, myName, nameSent, isGameStarted, newSong, isGameEnded, mainPeer } from "../js/store.js";
 	import {createPeer, sendProfile, startGame} from "../js/networking.js"
     import { get } from 'svelte/store';
@@ -10,6 +9,7 @@
 	import {hearts} from '../js/hearts';
 	import {onMount} from "svelte";
 	
+	let time = 2 * 60;
 
 	let heartColor;
 
@@ -44,7 +44,7 @@
 {#if $mainPeer}
 <!-- start button -->
 <button class = "start-button" on:click={startGame}>
-	Start Game HERE
+	Start Game
 </button>
 {:else}
 
@@ -54,8 +54,16 @@
 {/if}
 
 
+{#if $isGameStarted && !$isGameEnded}
+<div class = "centered">
+	<CircleProgressBar countdown={time} />
+	<AudioPlayer />
+</div>
+{/if}
 
-
+<!-- <div class = "centered">
+	<Points />
+</div> -->
 
 
 <style>
@@ -69,11 +77,16 @@
   	}
 
 	.start-button {
-		
+		padding: 1.2rem;
+		margin-top: 2rem;
+		background-color: #e8d6b7;
+		color: #121212;
+		font-size: 2rem;
 	}
 
 	h1 {
-		font-size: 7rem;
+		font-size: 6rem;
+		margin-bottom: 1rem;
 	}
 
 	

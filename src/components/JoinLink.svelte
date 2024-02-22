@@ -1,5 +1,6 @@
 <script>
     import {isGameStarted, myid, mainid, mainPeer} from '../js/store.js'
+    import Icon from '@iconify/svelte';
     let link
 
       //sets as either main or side peer
@@ -32,14 +33,14 @@
  
 </script>
 
-<div class="join-link">
+<div>
     {#if $mainPeer && !$isGameStarted} 
         {#if $myid !== ''}
-            <p> {link} </p>
+            <!-- <p> {link} </p> -->
             <button class="join-link" on:click={copyToClipboard}>
-                {clicked ? 'Join Link (copied)' : 'Copy Join Link'}
+                {clicked ? 'Join Link (copied)' : 'Share with Friends'}
+                <Icon icon="material-symbols:share" />
             </button>
-            <h1></h1>
             
         {:else}
             <p class="waiting">Enter Name to get Join Link...</p>
@@ -52,6 +53,15 @@
 
 <style>
   
+  
+    .join-link {
+        padding: 1.2rem;
+		margin-top: 2rem;
+		background-color: #e8d6b7;
+		color: #121212;
+		font-size: 2rem;
+    }
+
     .join-link:hover {
       cursor: pointer;
     }

@@ -52,12 +52,12 @@
 	<input class = "input" type="text" bind:value={tyName} placeholder="Enter Your Name">
 {/if}
 
-{#if !$isGameStarted && !$nameSent}
+<!-- {#if !$isGameStarted && !$nameSent}
 <button on:click={sendProfile}>
-	Join Game
+	Join GameDJFKLASDJFKLSA
 </button>
 
-{/if}
+{/if} -->
 
 {#if $isGameStarted && !$isGameEnded}
 <div class = "centered">
