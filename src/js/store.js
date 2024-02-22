@@ -10,6 +10,10 @@ export const myid = writable("");
 export const nameSent = writable(false);
 export const myName = writable("qia qia");
 
+export const showPopup = writable(true);
+export const showHome = writable(false);
+export const showGame = writable(false);
+export const showResults = writable(false);
 
 
 export const profiles = writable({});

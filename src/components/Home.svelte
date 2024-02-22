@@ -54,12 +54,12 @@
 {/if}
 
 
-{#if $isGameStarted && !$isGameEnded}
+<!-- {#if $isGameStarted && !$isGameEnded}
 <div class = "centered">
 	<CircleProgressBar countdown={time} />
 	<AudioPlayer />
 </div>
-{/if}
+{/if} -->
 
 <!-- <div class = "centered">
 	<Points />
@@ -81,12 +81,13 @@
 		margin-top: 2rem;
 		background-color: #e8d6b7;
 		color: #121212;
-		font-size: 2rem;
+		font-size: 2rem; 
 	}
 
 	h1 {
 		font-size: 6rem;
 		margin-bottom: 1rem;
+		margin-top: 0rem;
 	}
 
 	

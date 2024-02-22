@@ -4,6 +4,9 @@
   import Leaderboard from './Leaderboard.svelte';
   import Popup from './Popup.svelte';
   import Home from './Home.svelte';
+  import {isGameStarted, isGameEnded, showGame, showHome, showPopup, showResults} from '../js/store.js'
+  import Game from './Game.svelte';
+  import Results from './Results.svelte';
 
 </script>
 
@@ -23,23 +26,35 @@
     </div>
   </div> -->
   
+<!-- {#if $showPopup}
+  <Popup />
+{/if}
 
+
+{#if !$isGameEnded}
 <div class = "row">
   <div class = "column left">
     <Leaderboard />
   </div>
   <div class = "column right">
+    {#if !$isGameStarted}
     <Home />
-  
-    <Popup />
- 
     <JoinLink />
+    {:else}
+    <Game />
+    {/if}
+
   </div>
 </div>
+{/if}
 
 
-  <!-- <Audio /> -->
+{#if !$isGameStarted}
+  <Results />
+{/if} -->
 
+
+<Results />
   
 
 
@@ -47,27 +62,33 @@
 
 <style>
 
+
 * {
   box-sizing: border-box;
 }
 
 
-
-
 .column {
   float: left;
-  padding: 10px;
+  padding: 0px;
   
 }
 
 .left {
   width: 25%;
+  background-color: #e8d6b7;
+  /* opacity: 1; */
+  border-radius: 30px;
 }
 
 .right {
   width: 75%;
 }
 
+
+.row {
+
+}
 .row:after {
   content: "";
   display: table;
